@@ -1,4 +1,9 @@
-import { Controller, type FieldValues, type Path, useFormContext } from 'react-hook-form';
+import {
+	Controller,
+	type FieldValues,
+	type Path,
+	useFormContext,
+} from 'react-hook-form';
 import {
 	FormControl,
 	FormControlLabel,
@@ -32,7 +37,7 @@ function RadioGroupComponent<T extends FieldValues>({
 			render={({ field, fieldState: { error } }) => (
 				<FormControl {...field} error={!!error}>
 					<FormLabel>{label}</FormLabel>
-					<RadioGroup sx={{display: 'flex', flexDirection: 'row'}}>
+					<RadioGroup sx={{ display: 'flex', flexDirection: 'row' }}>
 						{options?.map((option) => (
 							<FormControlLabel
 								value={option.id}
@@ -43,8 +48,7 @@ function RadioGroupComponent<T extends FieldValues>({
 						))}
 					</RadioGroup>
 				</FormControl>
-			)}
-		></Controller>
+			)}></Controller>
 	);
 }
 

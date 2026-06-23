@@ -1,5 +1,9 @@
-
-import { Controller, type FieldValues, type Path, useFormContext } from 'react-hook-form';
+import {
+	Controller,
+	type FieldValues,
+	type Path,
+	useFormContext,
+} from 'react-hook-form';
 
 import { TextField as MUITextField, type TextFieldProps } from '@mui/material';
 
@@ -7,10 +11,7 @@ type Props<T extends FieldValues> = {
 	name: Path<T>;
 } & Pick<TextFieldProps, 'label'>;
 
-function TextField<T extends FieldValues>({
-	name,
-	...props
-}: Props<T>) {
+function TextField<T extends FieldValues>({ name, ...props }: Props<T>) {
 	const { control } = useFormContext();
 
 	return (
