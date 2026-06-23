@@ -40,16 +40,16 @@ example: VITE_API_BASE_URL=<your api url>
 ### 3. npm run dev
 
 src/
-├── api/            # Requests for labels
-│   ├── labels-mutations/  # Custom TanStack Query mutations & queries (useUpdateLabel, etc.)
-├── assets/ # Holds image assets
+├── api/
+│   └── labels-mutations/     # Custom TanStack Query mutations & queries (useUpdateLabel, etc.)
+├── assets/                   # Holds image assets
 ├── components/
-│   ├── form/  # Reusable MUI wrapped form elements (Select, TextField, etc)
-│   └── lable-table.tsx # Display for data grid
-│   └── label-form.tsx # Display for data grid
-│   └── custom-toolbar.tsx # Toolbar to add bar to the MUI Data Grid
-├── context/ # Custom TanStack Query mutations & queries (useUpdateLabel, etc.)
-│   └── lable-context.tsx # Context for Label
-│   └── lable-form-schema.tsx # Schema for Lable Form
-├── App.tsx           # Router configuration and QueryClientProvider setup
-└── main.tsx          # Application entry point
+│   ├── form/                 # Reusable MUI wrapped form elements (Select, TextField, etc)
+│   ├── lable-table.tsx       # Display for data grid
+│   ├── label-form.tsx        # Form component for creating/updating labels
+│   └── custom-toolbar.tsx    # Toolbar to add features to the MUI Data Grid
+├── context/                  # Context management and schemas
+│   ├── lable-context.tsx     # Context state provider for Label operations
+│   └── lable-form-schema.tsx # Validation schema for the Label Form
+├── App.tsx                   # Router configuration and QueryClientProvider setup
+└── main.tsx                  # Application entry point
