@@ -1,6 +1,6 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { useQuery } from '@tanstack/react-query';
-import { getLabels } from '../api/labels-api';
+import { getLabels } from '../api/get-labels';
 import CustomToolbar from './custom-toolbar';
 import AddLabelForm from './label-form';
 import { useLabelContext } from '../contexts/label-context';
