@@ -12,8 +12,9 @@ import {
 	labelSchema,
 	type LabelSchema,
 } from './label-form-schema';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteLabel, postLabel, updateLabel } from '../api/labels-api';
+import { addLabelMutation } from '../api/labels-mutations/add-label-mutation';
+import { deleteLabelMutation } from '../api/labels-mutations/delete-label-mutation';
+import { updateLabelMutation } from '../api/labels-mutations/update-label-mutation';
 
 export type LabelContextType = {
 	labels: GmailLabel[];
@@ -56,43 +57,24 @@ export function LabelContextProvider({
 		'create' | 'update' | null
 	>(null);
 	const [selectedRow, setSelectedRow] = useState<GmailLabel>();
-	const queryClient = useQueryClient();
+	const addLabel = addLabelMutation();
+	const deleteLabel = deleteLabelMutation();
+	const updateLabel= updateLabelMutation();
 
-	const methods = useForm<LabelSchema>({
+    const methods = useForm<LabelSchema>({
 		defaultValues: defaultLabelFormValues,
 		resolver: yupResolver(labelSchema) as Resolver<LabelSchema, unknown>,
 	});
 
-	const addLabelMutation = useMutation({
-		mutationFn: postLabel,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['labelsData'] });
-		},
-	});
-
-	const deleteLabelMutation = useMutation({
-		mutationFn: deleteLabel,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['labelsData'] });
-		},
-	});
-
-	const updateLabelMutation = useMutation({
-		mutationFn: updateLabel,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['labelsData'] });
-		},
-	});
-
 	function addCallback() {
 		const requestBody = JSON.parse(JSON.stringify(methods.getValues()));
-		addLabelMutation.mutate(requestBody);
+		addLabel.mutate(requestBody);
 	}
 
 	function updateCallback() {
 		if (!selectedRow) return;
 		const requestBody = JSON.parse(JSON.stringify(methods.getValues()));
-		updateLabelMutation.mutate({ id: selectedRow?.toString(), ...requestBody });
+		updateLabel.mutate({ id: selectedRow?.toString(), ...requestBody });
 	}
 
 	function showUpdateForm() {
@@ -105,7 +87,7 @@ export function LabelContextProvider({
 
 	function deleteCallback() {
 		if (!selectedRow) return;
-		deleteLabelMutation.mutate(selectedRow.id?.toString());
+		deleteLabel.mutate(selectedRow.id?.toString());
 	}
 
 	function resetCallback() {
@@ -141,9 +123,9 @@ export function LabelContextProvider({
 				onSubmit,
 			}}>
 			<FormProvider {...methods}>
-				{addLabelMutation.isPending ||
-				updateLabelMutation.isPending ||
-				deleteLabelMutation.isPending
+				{addLabel.isPending ||
+				updateLabel.isPending ||
+				deleteLabel.isPending
 					? 'Loading...'
 					: children}
 			</FormProvider>
